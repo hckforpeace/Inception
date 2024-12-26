@@ -1,0 +1,11 @@
+[mysqld]
+# path to the directory that will save our database
+datadir = /var/lib/mysql
+# Path to communicate with the socket
+socket = /run/musqld/musqld.sock
+# which ip addresses can communicate to this port * => all
+bind_address=*
+# port on which to communicate
+port = 3306
+# user
+user = mysql
