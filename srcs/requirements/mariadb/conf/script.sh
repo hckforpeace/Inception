@@ -1,4 +1,9 @@
 # start mysql
+sed '28s/.*/bind-address            = 127.0.0.1/' 50-server.cnf > temp_file && mv temp_file 50-server.cnf
+
+export db_name=mydb
+export db_user=pierre
+export db_pwd=234
 service mysql start;
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'pbeyloun' IDENTIFIED BY '${SQL_PASSWORD}';"
