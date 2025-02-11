@@ -1,11 +1,17 @@
-FROM debian:buster
+# pull base image
+FROM debian:bullseye
 
-RUN apt update -y && apt upgrade -y
+# update and upgrade the system
+RUN apt-get update -y && apt upgrade -y
 
-RUN apt install vim -y
+# install packages
+RUN apt-get install -y mariadb-server netcat
 
-RUN apt install mariadb-server-10.3 -y
+# copy files from host to container COPY ./conf/mdb-conf.sh /mdb-conf.sh
+COPY /conf/mdb-conf.sh /mdb-conf.sh
 
-COPY conf/script.sh /root
+# give execution permission for the configuration file
+RUN chmod +x /mdb-conf.sh
 
-CMD ["bash", "/root/script.sh"]
+# ENTRYPOINT to run at the start of a container
+ENTRYPOINT ["bash", "/root/mdb-conf.sh"]
