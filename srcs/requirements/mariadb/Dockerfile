@@ -14,4 +14,4 @@ COPY /conf/mdb-conf.sh /mdb-conf.sh
 RUN chmod +x /mdb-conf.sh
 
 # ENTRYPOINT to run at the start of a container
-ENTRYPOINT ["bash", "/root/mdb-conf.sh"]
+ENTRYPOINT ["bash", "/mdb-conf.sh"]
