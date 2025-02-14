@@ -1,0 +1,72 @@
+version: "8.2"
+
+# services
+services:
+#mariadb
+  mariadb:
+  image: mariadb:user # user to say that the image mariadb is custom
+  container_name: mariadb
+  build: ./mariadb
+  volumes:
+    - mariadb:var/lib/mysql
+  env_file:
+    - .env
+  networks:
+    - inception # Connects container to the inception network for inter-container communication
+  restart: always # insures that the container restart in case of failure
+  healthcheck:
+    test: ["CMD", "nc", "-zv", "mariadb", "3306"] #command that will define if the containerr is healthy or not
+    interval: 1s # runs the health check every 1 second
+    timeout: 5s # set the maximum time for the healthcheck to run, means it must be completed within 5 seconds
+    retries: 10 # Specifies the number of consecutive failures needed to consider the container unhealthy (default: 3)
+#nginx
+  nginx:
+    image: nginx:user
+    container_name: nginx
+    build: ./nginx
+    ports: # port binding 442 on the host to 443 on the container
+      - "443:443"
+    depends_on: # insures that wordpress service starts before Nginx
+      - wordpress
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    restart: always
+# wordpress
+  wordpress:
+    image: wordpress:user
+    container_name: wordpress
+    build: ./wordpress
+    depends_on: # the container wodpress wont run before the container mariadb runs
+      mariadb:
+        condition: service_healthy # and it will run only if it is healthy (succeeded to run, relies on healthcheck)
+    volumes:
+      - wordpress:/var/www/wordpress
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+
+# Volumes
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: /home/data/mariadb
+      o : bind
+      type : none
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: /home/data/wordpress
+      o: bind
+      type: none
+
+# network
+networks:
+  inception:
+    name: inception
