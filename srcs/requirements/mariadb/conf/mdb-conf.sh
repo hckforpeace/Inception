@@ -4,7 +4,7 @@ service mariadb start
 sleep 5 # wait for the mariadb to start
 
 # create a database if it doesn't exists
-mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DB}\`;"
+mariadb -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
 
 # Create user if doesn't exists 
 mariadb -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
@@ -18,4 +18,3 @@ mariadb -e "FLUSH PRIVILEGES;"
 mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
 
 mysqld_safe --port=3306 --bind-address=0.0.0.0 --datadir='/var/lib/mysql'
-

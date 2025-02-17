@@ -13,5 +13,7 @@ COPY /conf/mdb-conf.sh /mdb-conf.sh
 # give execution permission for the configuration file
 RUN chmod +x /mdb-conf.sh
 
+EXPOSE 3306
+
 # ENTRYPOINT to run at the start of a container
 ENTRYPOINT ["./mdb-conf.sh"]
