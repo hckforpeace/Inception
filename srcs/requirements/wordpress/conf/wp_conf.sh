@@ -10,7 +10,7 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 # creating directory for the wordpress site
-mkdir -p /var/www/wordpress
+# mkdir -p /var/www/wordpress
 
 chmod -R 755 /var/www/wordpress/
 

@@ -1,4 +1,4 @@
-# usr/bin/bash
+#!usr/bin/bash
 
 service mariadb start
 sleep 5 # wait for the mariadb to start
