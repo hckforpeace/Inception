@@ -7,8 +7,9 @@ services:
     image: mariadb:user # user to say that the image mariadb is custom
     container_name: mariadb
     build: requirements/mariadb
-    volumes:
-      - mariadb:/var/lib/mysql
+    secrets:
+      - db_password
+      - db_root_password
     env_file:
       - .env
     networks:
@@ -39,6 +40,10 @@ services:
     image: wordpress:user
     container_name: wordpress
     build: requirements/wordpress
+    secrets:
+      - db_password
+      - wp_adm_password
+      - wp_usr_password
     depends_on: # the container wodpress wont run before the container mariadb runs
       mariadb:
         condition: service_healthy # and it will run only if it is healthy (succeeded to run, relies on healthcheck)
@@ -56,14 +61,14 @@ volumes:
     name: mariadb
     driver: local
     driver_opts:
-      device: /home/pierre/mariadb # To change in case I change laptop
+      device: /home/${USER}/mariadb # To change in case I change laptop
       o : bind
       type : none
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
-      device: /home/pierre/wordpress # To change in case I change laptop
+      device: /home/${USER}/wordpress # To change in case I change laptop
       o: bind
       type: none
 
@@ -71,3 +76,14 @@ volumes:
 networks:
   inception:
     name: inception
+
+# secrets
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  wp_adm_password:
+    file: ../secrets/wp_adm_pw.txt
+  wp_usr_password:
+    file: ../secrets/wp_usr_pw.txt

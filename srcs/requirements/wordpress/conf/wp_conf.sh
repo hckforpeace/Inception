@@ -20,12 +20,12 @@ cd /var/www/wordpress
 
 # download wordpress core files
 wp core download --allow-root
-# create wp-config.php file with database details
-wp core config --dbhost=mariadb:3306 --dbname="$MYSQL_DB" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --allow-root
+# create wp-config.php file with database details getting the database_password from the secret folder
+MYSQL_PASSWORD=$(cat /run/secrets/db_password); wp core config --dbhost=mariadb:3306 --dbname="$MYSQL_DB" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --allow-root
 # install wordpress with the given title, admin username, password and email
-wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_N" --admin_password="$WP_ADMIN_P" --admin_email="$WP_ADMIN_E" --allow-root
+WP_ADMIN_P=$(cat /run/secrets/wp_adm_password); wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_N" --admin_password="$WP_ADMIN_P" --admin_email="$WP_ADMIN_E" --allow-root
 #create a new user with the given username, email, password and role
-wp user create "$WP_U_NAME" "$WP_U_EMAIL" --user_pass="$WP_U_PASS" --role="$WP_U_ROLE" --allow-root
+WP_U_PASS=$(cat /run/secrets/wp_usr_password); wp user create "$WP_U_NAME" "$WP_U_EMAIL" --user_pass="$WP_U_PASS" --role="$WP_U_ROLE" --allow-root
 
 
 # change listen port from unix socket to 9000
