@@ -9,9 +9,10 @@ RUN apt-get install -y\
             php\
             php7.4\
             curl\
-						php-fpm\
-						php-mysql\
-						mariadb-client
+			php-fpm\
+			php-mysql\
+			mariadb-client\
+			php7.4-redis
 
 COPY ./conf/wp_conf.sh /
 

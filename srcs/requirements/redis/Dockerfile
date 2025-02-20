@@ -12,4 +12,6 @@ RUN echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://
 
 RUN  apt-get install -y redis
 
-ENTRYPOINT ["redis-server", "--loglevel", "verbose"]
+RUN sed -i '/protected-mode yes/c\protected-mode no' /etc/redis/redis.conf
+
+CMD ["redis-server", "--protected-mode", "no"]
