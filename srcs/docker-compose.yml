@@ -35,6 +35,40 @@ services:
       - inception
     restart: always
 
+#vsftpd
+  vsftpd:
+    image:  vsftpd:user
+    container_name: vsftpd
+    build:  requirements/vsftpd
+    ports:
+      - "21:21"
+      - "10000-10100:10000-10100"
+    volumes:
+      - wordpress:/home/pbeyloun/volume
+    restart:  always
+
+#adminer
+  adminer:
+    image: adminer:user
+    container_name: adminer
+    build: requirements/adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - inception
+    restart: always
+
+#redis
+  redis:
+    image: redis:user
+    container_name: redis 
+    build: requirements/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - inception
+    restart: always
+
 # wordpress
   wordpress:
     image: wordpress:user

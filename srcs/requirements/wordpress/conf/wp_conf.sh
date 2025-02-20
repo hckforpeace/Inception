@@ -14,7 +14,6 @@ mv wp-cli.phar /usr/local/bin/wp
 
 chmod -R 755 /var/www/wordpress/
 
-chown -R www-data:www-data /var/www/wordpress
 
 cd /var/www/wordpress
 
@@ -28,9 +27,13 @@ WP_ADMIN_P=$(cat /run/secrets/wp_adm_password); wp core install --url="$DOMAIN_N
 WP_U_PASS=$(cat /run/secrets/wp_usr_password); wp user create "$WP_U_NAME" "$WP_U_EMAIL" --user_pass="$WP_U_PASS" --role="$WP_U_ROLE" --allow-root
 
 
+#
+echo "define('FS_METHOD', 'direct');" >> /var/www/wordpress/wp-config.php
 # change listen port from unix socket to 9000
 sed -i '36 s@/run/php/php7.4-fpm.sock@9000@' /etc/php/7.4/fpm/pool.d/www.conf
 # create a directory for php-fpm
 mkdir -p /run/php
+# set the ownership to all the wordpress files to the wordpress user
+chown -R www-data:www-data /var/www/wordpress
 # start php-fpm service in the foreground to keep the container running
 /usr/sbin/php-fpm7.4 -F

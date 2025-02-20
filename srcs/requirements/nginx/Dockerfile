@@ -24,7 +24,7 @@ RUN mkdir -p /var/www/wordpress
 # create the wordpress directory
 RUN chown -R www-data:www-data /var/www/wordpress
 
-EXPOSE 443
+EXPOSE 8080
 
 # define the command to run when container starts
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
