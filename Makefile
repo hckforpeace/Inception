@@ -32,3 +32,8 @@ clean:
 	@docker network rm inception
 	@sudo rm -rf $(WP_DATA) || true
 	@sudo rm -rf $(DB_DATA) || true
+
+re: clean up
+
+prune: clean
+	@docker system prune -a --volumes -f

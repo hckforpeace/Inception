@@ -10,4 +10,4 @@ chown -R www-data:www-data /var/www/adminer
 cd /var/www/adminer
 
 # Start PHP's built-in web server
-php -S 0.0.0.0:8080
+php -S 0.0.0.0:8085
