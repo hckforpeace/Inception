@@ -29,6 +29,15 @@ WP_U_PASS=$(cat /run/secrets/wp_usr_password); wp user create "$WP_U_NAME" "$WP_
 # defines WP_REDIS_HOST to redis which is the address of the container
 wp config set WP_REDIS_HOST 'redis' --add --allow-root
 
+
+# install redis plugini and activate it
+wp plugin install redis-cache --activate --allow-root --path='/var/www/wordpress'
+# activate the plugin (it should be already activated)
+wp plugin activate redis-cache --allow-root --path='/var/www/wordpress/'
+# enable it 
+wp redis enable --allow-root --path='/var/www/wordpress'
+
+
 sed -i '36 s@/run/php/php7.4-fpm.sock@9000@' /etc/php/7.4/fpm/pool.d/www.conf
 # create a directory for php-fpm
 mkdir -p /run/php

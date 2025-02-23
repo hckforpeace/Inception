@@ -1,6 +1,7 @@
 
 WP_DATA = /home/$(USER)/wordpress # To change in case I change laptop
 DB_DATA = /home/$(USER)/mariadb # To change in case I change laptop
+REDIS_DATA = /home/$(USER)/redis # To change in case I change laptop
 
 all: up
 
@@ -9,6 +10,7 @@ all: up
 up: build
 	mkdir -p $(WP_DATA)
 	mkdir -p $(DB_DATA)
+	mkdir -p $(REDIS_DATA)
 	docker compose -f ./srcs/docker-compose.yml up -d
 
 # stop the containers

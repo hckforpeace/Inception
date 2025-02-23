@@ -66,6 +66,19 @@ services:
     networks:
       - inception
     restart: always
+    volumes:
+      - redis:/var/lib/redis
+
+#redis
+  lighttpd:
+    image: lighttpd:user
+    container_name: lighttpd 
+    build: requirements/lighttpd
+    ports:
+      - 8081:8081
+    networks:
+      - inception
+    restart: always
 
 # wordpress
   wordpress:
@@ -101,6 +114,13 @@ volumes:
     driver: local
     driver_opts:
       device: /home/${USER}/wordpress # To change in case I change laptop
+      o: bind
+      type: none
+  redis:
+    name: redis
+    driver: local
+    driver_opts:
+      device: /home/${USER}/redis # To change in case I change laptop
       o: bind
       type: none
 
