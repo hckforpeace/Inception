@@ -15,6 +15,8 @@ services:
     networks:
       - inception # Connects container to the inception network for inter-container communication
     restart: always # insures that the container restart in case of failure
+    volumes:
+      - mariadb:/var/lib/mysql
     healthcheck:
       test: ["CMD", "nc", "-zv", "mariadb", "3306"] #command that will define if the container is healthy or not
       interval: 1s # runs the health check every 1 second
@@ -125,21 +127,21 @@ volumes:
     name: mariadb
     driver: local
     driver_opts:
-      device: /home/${USER}/mariadb # To change in case I change laptop
+      device: /home/${USER}/data/mariadb # To change in case I change laptop
       o : bind
       type : none
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
-      device: /home/${USER}/wordpress # To change in case I change laptop
+      device: /home/${USER}/data/wordpress # To change in case I change laptop
       o: bind
       type: none
   redis:
     name: redis
     driver: local
     driver_opts:
-      device: /home/${USER}/redis # To change in case I change laptop
+      device: /home/${USER}/data/redis # To change in case I change laptop
       o: bind
       type: none
 

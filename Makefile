@@ -1,13 +1,15 @@
 
-WP_DATA = /home/$(USER)/wordpress # To change in case I change laptop
-DB_DATA = /home/$(USER)/mariadb # To change in case I change laptop
-REDIS_DATA = /home/$(USER)/redis # To change in case I change laptop
+DATA = /home/$(USER)/data
+WP_DATA = /home/$(USER)/data/wordpress # To change in case I change laptop
+DB_DATA = /home/$(USER)/data/mariadb # To change in case I change laptop
+REDIS_DATA = /home/data/$(USER)/redis # To change in case I change laptop
 
 all: up
 
 # creates the wordpress and mariadb directories.
 # and runs docker compose in detach mode
 up: build
+	mkdir -p $(DATA)
 	mkdir -p $(WP_DATA)
 	mkdir -p $(DB_DATA)
 	mkdir -p $(REDIS_DATA)
@@ -30,8 +32,7 @@ clean:
 	@docker rmi -f $$(docker images -qa) || true
 	@docker volume rm $$(docker volume ls -q) || true
 	@docker network rm inception
-	@sudo rm -rf $(WP_DATA) || true
-	@sudo rm -rf $(DB_DATA) || true
+	@sudo rm -rf $(DATA) || true
 
 re: clean up
 
