@@ -2,7 +2,7 @@
 DATA = /home/$(USER)/data
 WP_DATA = /home/$(USER)/data/wordpress # To change in case I change laptop
 DB_DATA = /home/$(USER)/data/mariadb # To change in case I change laptop
-REDIS_DATA = /home/data/$(USER)/redis # To change in case I change laptop
+REDIS_DATA = /home/$(USER)/data/redis # To change in case I change laptop
 
 all: up
 
@@ -32,7 +32,7 @@ clean:
 	@docker rmi -f $$(docker images -qa) || true
 	@docker volume rm $$(docker volume ls -q) || true
 	@docker network rm inception
-	@sudo rm -rf $(DATA) || true
+	@sudo rm -rf $(DATA)
 
 re: clean up
 
