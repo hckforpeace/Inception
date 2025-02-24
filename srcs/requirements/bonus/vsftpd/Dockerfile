@@ -11,4 +11,4 @@ COPY ./conf/vsftpd.conf /etc/vsftpd.conf
 
 RUN chmod +x /vsftpd_conf.sh
 
-CMD ["bash", "vsftpd_conf.sh"]
+ENTRYPOINT ["./vsftpd_conf.sh"]

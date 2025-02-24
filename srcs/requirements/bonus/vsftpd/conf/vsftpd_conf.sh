@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir -p /var/run/vsftpd/empty
 
 # Create the FTP user# 

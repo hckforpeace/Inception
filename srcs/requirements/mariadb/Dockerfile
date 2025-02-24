@@ -8,12 +8,12 @@ RUN apt-get update -y && apt upgrade -y
 RUN apt-get install -y mariadb-server netcat
 
 # copy files from host to container COPY ./conf/mdb-conf.sh /mdb-conf.sh
-COPY /conf/mdb-conf.sh /mdb-conf.sh
+COPY ./conf/mdb_conf.sh /
 
 # give execution permission for the configuration file
-RUN chmod +x /mdb-conf.sh
+RUN chmod +x /mdb_conf.sh
 
 EXPOSE 3306
 
 # ENTRYPOINT to run at the start of a container
-ENTRYPOINT ["bash", "mdb-conf.sh"]
+ENTRYPOINT ["./mdb_conf.sh"]
