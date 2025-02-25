@@ -23,7 +23,7 @@ services:
       test: ["CMD", "nc", "-zv", "mariadb", "3306"] #command that will define if the container is healthy or not
       interval: 1s # runs the health check every 1 second
       timeout: 5s # set the maximum time for the healthcheck to run, means it must be completed within 5 seconds
-      retries: 10 # Specifies the number of consecutive failures needed to consider the container unhealthy (default: 3)
+      retries: 18 # Specifies the number of consecutive failures needed to consider the container unhealthy (default: 3)
 #nginx
   nginx:
     image: nginx:user
